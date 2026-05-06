@@ -148,8 +148,8 @@ async function main() {
   }
 
   // 4) admin user
-  const email = process.env.ADMIN_EMAIL || "admin@nextcode.co.th";
-  const password = process.env.ADMIN_PASSWORD || "admin1234";
+  const email = process.env.ADMIN_EMAIL || "apinat.a@intervision.co";
+  const password = process.env.ADMIN_PASSWORD || "123456";
   await prisma.adminUser.upsert({
     where: { email },
     update: { passwordHash: hashPassword(password), role: "owner" },
