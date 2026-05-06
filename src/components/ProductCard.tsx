@@ -45,7 +45,7 @@ export default function ProductCard({ product }: { product: CatalogProduct }) {
             {product.tags.slice(0, 3).map((t) => (
               <span
                 key={t}
-                className="rounded-full bg-slate-100 px-2 py-0.5 text-[11px] text-slate-600"
+                className="rounded-full bg-brand-50 px-2.5 py-0.5 text-[11px] font-medium text-brand-700"
               >
                 #{t}
               </span>
@@ -56,7 +56,7 @@ export default function ProductCard({ product }: { product: CatalogProduct }) {
         <div className="mt-4 flex items-end justify-between">
           <div>
             <p className="text-xs text-slate-500">ราคาเริ่มต้น</p>
-            <p className="text-xl font-bold text-brand-700">
+            <p className="text-2xl font-extrabold text-brand-600">
               {formatTHB(product.basePrice)}
             </p>
           </div>

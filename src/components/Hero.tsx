@@ -10,23 +10,31 @@ export default function Hero() {
         <div>
           <span className="inline-flex items-center gap-2 rounded-full border border-brand-200 bg-white/70 px-3 py-1 text-xs font-semibold text-brand-700">
             <span className="h-2 w-2 rounded-full bg-brand-500" />
-            Powered by AI
+            เสร็จไวใน 7 วัน
           </span>
           <h1 className="mt-5 text-4xl font-bold leading-tight tracking-tight text-slate-900 sm:text-5xl">
-            เว็บราคาประหยัด <br />
-            <span className="text-brand-600">รองรับ SEO</span> ด้วยขุมพลัง AI
+            ทำเว็บให้ธุรกิจ
+            <span className="text-brand-600"> หาเจอง่าย</span>บน Google
+            <br />
+            <span className="text-2xl sm:text-3xl text-slate-600 font-semibold">
+              เริ่มต้นเพียง 4,900.-
+            </span>
           </h1>
-          <p className="mt-5 max-w-xl text-base text-slate-600 sm:text-lg">
-            ทีมงานมืออาชีพ + AI ช่วยเขียนเนื้อหาและวิเคราะห์คีย์เวิร์ด
-            ทำให้เว็บของคุณติดอันดับ Google ได้เร็วขึ้น ในงบที่เจ้าของธุรกิจจับต้องได้
+          <p className="mt-5 max-w-xl text-base text-slate-600 sm:text-lg leading-relaxed">
+            เบื่อไหม? จ้างทำเว็บแล้วเงียบหาย หาใน Google ไม่เจอ...
+            เราช่วยให้เว็บของคุณ<strong className="text-slate-800">ทำงานได้จริง ขายของได้จริง</strong>{" "}
+            ด้วยโครงสร้างที่ Google ชอบ และเนื้อหาที่ดึงดูดลูกค้า
+          </p>
+          <p className="mt-3 text-sm text-slate-500">
+            ใช้เทคโนโลยี AI ช่วยวิเคราะห์คีย์เวิร์ดให้เว็บติดหน้าแรกได้เร็วขึ้น
           </p>
 
           <div className="mt-8 flex flex-wrap gap-3">
             <Link href="#catalog" className="btn-primary">
-              ดูแคตตาล็อก
+              ดูแพ็กเกจทั้งหมด
             </Link>
             <Link href="#contact" className="btn-ghost">
-              ปรึกษาฟรี
+              รับคำปรึกษาฟรี
             </Link>
           </div>
 
@@ -52,15 +60,15 @@ export default function Hero() {
               <span className="h-2.5 w-2.5 rounded-full bg-yellow-400" />
               <span className="h-2.5 w-2.5 rounded-full bg-green-400" />
               <span className="ml-3 text-xs text-slate-400">
-                nextcode.co.th
+                yourwebsite.com
               </span>
             </div>
             <div className="grid gap-4 p-6 sm:grid-cols-2">
               {[
                 "🔥 โหลดเร็ว 0.8s",
-                "📱 Responsive",
-                "🔎 SEO Ready",
-                "🤖 AI Content",
+                "📱 ดูสวยทุกหน้าจอ",
+                "🔎 ติดหน้าแรก Google",
+                "🤖 AI ช่วยเขียนเนื้อหา",
               ].map((t) => (
                 <div
                   key={t}

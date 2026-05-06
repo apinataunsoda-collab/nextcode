@@ -27,8 +27,8 @@ type FormState = {
 const initial: FormState = { name: "", phone: "", email: "", message: "", website: "" };
 
 export default function ContactForm({
-  title = "สนใจบริการของเรา?",
-  subtitle = "กรอกข้อมูลสั้น ๆ ทีมงานจะติดต่อกลับภายใน 1 วันทำการ",
+  title = "รับคำปรึกษาและประเมินราคาฟรี",
+  subtitle = "กรอกข้อมูลสั้น ๆ เจ้าหน้าที่จะติดต่อกลับภายใน 24 ชั่วโมง ไม่มีค่าใช้จ่าย",
   defaultMessage,
   totalPreview,
   productSlug,
@@ -183,7 +183,7 @@ export default function ContactForm({
                 disabled={submitting}
                 className="btn-primary w-full disabled:opacity-60 sm:w-auto"
               >
-                {submitting ? "กำลังส่ง..." : "ส่งข้อมูล"}
+                {submitting ? "กำลังส่ง..." : "ส่งข้อมูลให้เจ้าหน้าที่ติดต่อกลับ"}
               </button>
             </div>
 

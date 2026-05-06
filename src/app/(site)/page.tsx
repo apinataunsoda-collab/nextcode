@@ -1,5 +1,8 @@
 import Hero from "@/components/Hero";
+import ProcessSteps from "@/components/ProcessSteps";
 import CatalogSection from "@/components/CatalogSection";
+import SocialProof from "@/components/SocialProof";
+import FAQ from "@/components/FAQ";
 import ContactForm from "@/components/ContactForm";
 import JsonLd from "@/components/JsonLd";
 import { professionalServiceJsonLd } from "@/lib/seo";
@@ -16,7 +19,10 @@ export default async function HomePage() {
     <>
       <JsonLd data={jsonLd} />
       <Hero />
+      <ProcessSteps />
       <CatalogSection />
+      <SocialProof />
+      <FAQ />
       <ContactForm />
     </>
   );
