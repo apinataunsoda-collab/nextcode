@@ -5,6 +5,8 @@ import JsonLd from "@/components/JsonLd";
 import { professionalServiceJsonLd } from "@/lib/seo";
 import { getCatalog } from "@/lib/catalog";
 
+export const dynamic = "force-dynamic";
+
 export default async function HomePage() {
   const products = await getCatalog();
   const minPrice = products.length ? Math.min(...products.map((p) => p.basePrice)) : undefined;
