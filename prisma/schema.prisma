@@ -1,0 +1,211 @@
+// Schema ของระบบหลังบ้าน NextCode
+// - ใช้ SQLite ตอน dev; ย้ายไป postgres/mysql ได้โดยเปลี่ยน provider + DATABASE_URL
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+/// หมวดหมู่ของสินค้า (ร้านอาหาร, โรงงาน, ฯลฯ)
+model Category {
+  id        String    @id @default(cuid())
+  name      String    @unique
+  slug      String    @unique
+  createdAt DateTime  @default(now())
+  products  Product[]
+}
+
+/// สินค้า = แบบเว็บไซต์ 1 แบบ (แพ็กเกจ)
+model Product {
+  id               String            @id @default(cuid())
+  slug             String            @unique
+  name             String
+  shortDescription String
+  image            String
+  basePrice        Int               // เก็บเป็นสตางค์หรือบาทเต็ม — ที่นี่ใช้บาท
+  serviceType      String            // ประเภทบริการ: "ออกแบบ", "ออกแบบ+ดูแลรายเดือน", "E-Commerce" ฯลฯ
+  features         String            // JSON array ของฟีเจอร์ (เก็บเป็น string ใน SQLite)
+  tags             String            @default("[]") // JSON array ของแท็ก เช่น ["ระบบจอง","คาเฟ่"]
+  isActive         Boolean           @default(true)
+  createdAt        DateTime          @default(now())
+  updatedAt        DateTime          @updatedAt
+
+  categoryId       String
+  category         Category          @relation(fields: [categoryId], references: [id])
+
+  // ความสัมพันธ์หลาย-ต่อ-หลายกับ Add-ons ผ่านตารางกลาง ProductAddOn
+  addOns           ProductAddOn[]
+  leads            Lead[]
+}
+
+/// บริการเสริม (ตั้งค่าได้จากหน้า Add-on Setting)
+model AddOn {
+  id          String         @id @default(cuid())
+  code        String         @unique       // เช่น "domain", "seo"
+  label       String
+  description String?
+  price       Int
+  isActive    Boolean        @default(true)
+  createdAt   DateTime       @default(now())
+  updatedAt   DateTime       @updatedAt
+
+  products    ProductAddOn[]
+  leadItems   LeadAddOn[]
+}
+
+/// ตารางกลาง Product <-> AddOn (many-to-many)
+/// ใส่ priceOverride เผื่ออยากตั้งราคาต่างจาก default สำหรับสินค้าตัวนั้น
+model ProductAddOn {
+  productId      String
+  addOnId        String
+  priceOverride  Int?
+  product        Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+  addOn          AddOn   @relation(fields: [addOnId], references: [id], onDelete: Cascade)
+
+  @@id([productId, addOnId])
+  @@index([addOnId])
+}
+
+/// Lead = ลูกค้าที่กรอกฟอร์มเข้ามา
+model Lead {
+  id         String      @id @default(cuid())
+  name       String
+  phone      String
+  email      String?
+  message    String?
+  totalPrice Int         // ยอดรวมที่ลูกค้าเลือก ณ ตอนส่งฟอร์ม
+  status     String      @default("NEW") // NEW | CONTACTED | QUOTED | WON | LOST
+  createdAt  DateTime    @default(now())
+  updatedAt  DateTime    @updatedAt
+
+  productId  String?
+  product    Product?    @relation(fields: [productId], references: [id])
+
+  // add-ons ที่ลูกค้าเลือกตอนกรอกฟอร์ม (snapshot)
+  addOns     LeadAddOn[]
+
+  quotations Quotation[]
+
+  @@index([status])
+  @@index([createdAt])
+}
+
+/// Snapshot ของ add-on ที่ลูกค้าเลือก (เก็บ priceAtTime ไว้กันราคาเปลี่ยนภายหลัง)
+model LeadAddOn {
+  id          String  @id @default(cuid())
+  leadId      String
+  addOnId     String
+  priceAtTime Int
+  label       String
+
+  lead   Lead  @relation(fields: [leadId], references: [id], onDelete: Cascade)
+  addOn  AddOn @relation(fields: [addOnId], references: [id])
+
+  @@index([leadId])
+}
+
+/// บัญชีแอดมิน + Role-based access
+model AdminUser {
+  id           String   @id @default(cuid())
+  email        String   @unique
+  passwordHash String
+  name         String?
+  role         String   @default("admin") // owner | admin | editor | viewer
+  permissions  String   @default("[]")    // JSON array ของ permission keys ที่ได้เพิ่มเติม
+  isActive     Boolean  @default(true)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt @default(now())
+}
+
+
+/// Site Settings — single row (id=1) เก็บข้อมูลเว็บไซต์แก้ได้จาก admin
+model SiteSetting {
+  id          Int      @id @default(1)
+
+  // General
+  name        String   @default("NextCode")
+  tagline     String   @default("เว็บราคาประหยัด รองรับ SEO ด้วยขุมพลัง AI")
+  description String   @default("รับทำเว็บไซต์ธุรกิจครบวงจร ออกแบบสวย โหลดเร็ว รองรับ SEO ด้วย AI")
+  url         String   @default("http://localhost:3000")
+
+  // Contact
+  address     String   @default("")
+  phone       String   @default("")
+  mobile      String   @default("")
+  email       String   @default("")
+  lineId      String   @default("")
+
+  // Social (เก็บเป็น URL)
+  facebook    String   @default("")
+  instagram   String   @default("")
+  tiktok      String   @default("")
+  youtube     String   @default("")
+
+  // Branding
+  logoUrl     String   @default("")
+  faviconUrl  String   @default("")
+
+  // Footer
+  footerText  String   @default("")
+
+  // Navigation (JSON array ของ { label, href })
+  navJson     String   @default("[]")
+
+  updatedAt   DateTime @updatedAt
+}
+
+
+/// ใบเสนอราคา
+model Quotation {
+  id          String          @id @default(cuid())
+  number      String          @unique // เลขที่ใบเสนอราคา เช่น QT-2026-0001
+  status      String          @default("DRAFT") // DRAFT | SENT | ACCEPTED | REJECTED | EXPIRED
+  validDays   Int             @default(30) // จำนวนวันที่ใบเสนอราคามีผล
+
+  // ข้อมูลลูกค้า (snapshot จาก lead หรือกรอกเอง)
+  customerName  String
+  customerPhone String
+  customerEmail String?
+  companyName   String?
+
+  // หมายเหตุ
+  notes       String?
+  terms       String?
+
+  // ยอดรวม
+  subtotal    Int             @default(0)
+  discount    Int             @default(0)
+  vat         Int             @default(0) // 0 = ไม่รวม VAT
+  total       Int             @default(0)
+  includeVat  Boolean         @default(false)
+
+  createdAt   DateTime        @default(now())
+  updatedAt   DateTime        @updatedAt
+  sentAt      DateTime?
+
+  leadId      String?
+  lead        Lead?           @relation(fields: [leadId], references: [id])
+
+  items       QuotationItem[]
+
+  @@index([leadId])
+  @@index([status])
+}
+
+/// รายการในใบเสนอราคา
+model QuotationItem {
+  id          String    @id @default(cuid())
+  quotationId String
+  description String
+  quantity    Int       @default(1)
+  unitPrice   Int
+  total       Int
+
+  quotation   Quotation @relation(fields: [quotationId], references: [id], onDelete: Cascade)
+
+  @@index([quotationId])
+}
