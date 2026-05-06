@@ -101,7 +101,7 @@ export async function getSiteSettings(): Promise<SiteSettings> {
       nav: nav.length ? nav : d.nav,
     };
   } catch (e) {
-    console.warn("[settings] falling back to defaults:", e);
+    console.warn("[settings] DB not ready, using defaults:", e);
     return defaultSettings();
   }
 }
