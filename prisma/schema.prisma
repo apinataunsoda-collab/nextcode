@@ -125,7 +125,7 @@ model AdminUser {
 
 /// Site Settings — single row (id=1) เก็บข้อมูลเว็บไซต์แก้ได้จาก admin
 model SiteSetting {
-  id          Int      @id @default(1) @db.Integer
+  id          Int      @id @default(1)
 
   // General
   name        String   @default("NextCode")
