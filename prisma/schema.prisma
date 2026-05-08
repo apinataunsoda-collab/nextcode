@@ -16,6 +16,7 @@ model Category {
   id        String    @id @default(cuid())
   name      String    @unique
   slug      String    @unique
+  demoUrl   String    @default("") // URL ของ demo prototype เช่น /demo/restaurant
   createdAt DateTime  @default(now())
   products  Product[]
 }

@@ -18,6 +18,7 @@ export type CatalogProduct = {
   serviceType: string;
   categoryName: string;
   categorySlug: string;
+  demoUrl: string;
   features: string[];
   tags: string[];
   addOns: CatalogAddOn[];
@@ -53,6 +54,7 @@ export async function getCatalog(): Promise<CatalogProduct[]> {
       serviceType: p.serviceType,
       categoryName: p.category.name,
       categorySlug: p.category.slug,
+      demoUrl: (p.category as any).demoUrl || "",
       features: safeParseArray(p.features),
       tags: safeParseArray(p.tags),
       addOns: p.addOns

@@ -11,6 +11,7 @@ const navItems = [
   { href: "/admin/quotations", label: "ใบเสนอราคา" },
   { href: "/admin/insights", label: "Insights" },
   { href: "/admin/products", label: "สินค้า (เว็บไซต์)" },
+  { href: "/admin/categories", label: "หมวดหมู่" },
   { href: "/admin/addons", label: "บริการเสริม" },
   { href: "/admin/emails", label: "Email Templates" },
   { href: "/admin/settings", label: "Site Settings" },
