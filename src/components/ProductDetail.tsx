@@ -134,9 +134,9 @@ export default function ProductDetail({ product }: { product: CatalogProduct }) 
                 <Link
                   href={`/demo/${product.slug}`}
                   target="_blank"
-                  className="mt-4 flex items-center justify-center gap-2 rounded-xl border border-brand-200 bg-brand-50 py-2.5 text-sm font-medium text-brand-700 transition hover:bg-brand-100"
+                  className="mt-4 flex items-center justify-center rounded-xl border border-brand-200 bg-brand-50 py-2.5 text-sm font-medium text-brand-700 transition hover:bg-brand-100"
                 >
-                  🎨 ดูตัวอย่างเว็บจริง (Prototype)
+                  ดูตัวอย่างเว็บจริง (Prototype)
                 </Link>
               </div>
 
