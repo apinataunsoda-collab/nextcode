@@ -202,6 +202,13 @@ export default function ProductDetail({ product }: { product: CatalogProduct }) 
                 >
                   สั่งซื้อ / ขอใบเสนอราคา
                 </Link>
+                <Link
+                  href={`/demo/${product.slug}`}
+                  target="_blank"
+                  className="mt-3 block rounded-full border border-white/30 py-3 text-center text-sm font-medium text-white/90 transition hover:bg-white/10"
+                >
+                  🎨 ดูตัวอย่างเว็บจริง (Prototype)
+                </Link>
               </div>
             </div>
           </div>
