@@ -76,16 +76,114 @@ export default function DemoLayout({ children }: { children: React.ReactNode }) 
 }
 
 function DemoAdmin({ slug }: { slug: string }) {
-  const adminData: Record<string, { orders: number; revenue: string; products: number }> = {
-    ecommerce: { orders: 156, revenue: "฿248,500", products: 89 },
-    restaurant: { orders: 84, revenue: "฿67,200", products: 32 },
-    factory: { orders: 12, revenue: "฿1,450,000", products: 18 },
-    clinic: { orders: 67, revenue: "฿385,000", products: 15 },
-    "real-estate": { orders: 23, revenue: "฿8,900,000", products: 45 },
-    portfolio: { orders: 34, revenue: "฿170,000", products: 12 },
+  const configs: Record<string, { title: string; stats: { label: string; value: string; color: string }[]; tableTitle: string; columns: string[]; rows: string[][] }> = {
+    ecommerce: {
+      title: "E-Commerce Dashboard",
+      stats: [
+        { label: "คำสั่งซื้อเดือนนี้", value: "156", color: "blue" },
+        { label: "รายได้เดือนนี้", value: "฿248,500", color: "green" },
+        { label: "สินค้าในระบบ", value: "89", color: "purple" },
+      ],
+      tableTitle: "คำสั่งซื้อล่าสุด",
+      columns: ["เลขที่", "ลูกค้า", "สถานะ", "ยอด"],
+      rows: [
+        ["#1089", "คุณสมชาย", "จัดส่งแล้ว", "฿2,490"],
+        ["#1088", "คุณนภา", "กำลังจัดส่ง", "฿1,890"],
+        ["#1087", "คุณวิทย์", "รอชำระเงิน", "฿3,280"],
+        ["#1086", "คุณแพร", "จัดส่งแล้ว", "฿890"],
+        ["#1085", "คุณเบล", "จัดส่งแล้ว", "฿4,590"],
+      ],
+    },
+    restaurant: {
+      title: "ระบบจัดการร้านอาหาร",
+      stats: [
+        { label: "จองโต๊ะวันนี้", value: "12", color: "blue" },
+        { label: "จองสัปดาห์นี้", value: "47", color: "green" },
+        { label: "โต๊ะว่าง", value: "8/20", color: "purple" },
+      ],
+      tableTitle: "รายการจองโต๊ะวันนี้",
+      columns: ["เวลา", "ชื่อ", "จำนวนคน", "สถานะ"],
+      rows: [
+        ["11:30", "คุณสมชาย", "4 คน", "ยืนยันแล้ว"],
+        ["12:00", "คุณนภา", "2 คน", "ยืนยันแล้ว"],
+        ["12:30", "คุณวิทย์", "6 คน", "รอยืนยัน"],
+        ["18:00", "คุณแพร", "4 คน", "ยืนยันแล้ว"],
+        ["18:30", "คุณเบล", "8 คน", "รอยืนยัน"],
+        ["19:00", "คุณมิ้นท์", "2 คน", "ยืนยันแล้ว"],
+      ],
+    },
+    factory: {
+      title: "ระบบจัดการเว็บโรงงาน",
+      stats: [
+        { label: "ผู้เข้าชมเดือนนี้", value: "3,842", color: "blue" },
+        { label: "ผู้ติดต่อเข้ามา", value: "28", color: "green" },
+        { label: "ใบเสนอราคาที่ส่ง", value: "15", color: "purple" },
+      ],
+      tableTitle: "ผู้ติดต่อเข้ามาล่าสุด (RFQ)",
+      columns: ["วันที่", "บริษัท", "สินค้าที่สนใจ", "สถานะ"],
+      rows: [
+        ["7 พ.ค.", "ABC Trading Co.", "กล่องลูกฟูก 3 ชั้น", "ส่งใบเสนอราคาแล้ว"],
+        ["6 พ.ค.", "XYZ Import", "ฟิล์มยืดพันพาเลท", "รอติดต่อกลับ"],
+        ["5 พ.ค.", "Thai Foods Ltd.", "บรรจุภัณฑ์ Food Grade", "ปิดการขาย"],
+        ["4 พ.ค.", "Global Pack", "ถุง PE คุณภาพสูง", "รอติดต่อกลับ"],
+        ["3 พ.ค.", "Fresh Mart", "กล่องกระดาษ", "ส่งใบเสนอราคาแล้ว"],
+      ],
+    },
+    clinic: {
+      title: "ระบบจัดการคลินิก",
+      stats: [
+        { label: "นัดหมายวันนี้", value: "18", color: "blue" },
+        { label: "นัดหมายสัปดาห์นี้", value: "72", color: "green" },
+        { label: "คนไข้ทั้งหมด", value: "1,245", color: "purple" },
+      ],
+      tableTitle: "คิวนัดหมายวันนี้",
+      columns: ["เวลา", "ชื่อ", "บริการ", "แพทย์"],
+      rows: [
+        ["09:00", "คุณมิ้นท์", "โบท็อกซ์ลดริ้วรอย", "พญ.นภา"],
+        ["09:30", "คุณเบล", "เลเซอร์หน้าใส", "นพ.วิทย์"],
+        ["10:00", "คุณแพร", "ฟิลเลอร์ปรับรูปหน้า", "พญ.นภา"],
+        ["10:30", "คุณสมชาย", "ร้อยไหมยกกระชับ", "นพ.วิทย์"],
+        ["11:00", "คุณนิด", "เลเซอร์หน้าใส", "พญ.นภา"],
+        ["11:30", "คุณฝน", "โบท็อกซ์ลดริ้วรอย", "นพ.วิทย์"],
+      ],
+    },
+    "real-estate": {
+      title: "ระบบจัดการอสังหาริมทรัพย์",
+      stats: [
+        { label: "ยูนิตที่เปิดขาย", value: "45", color: "blue" },
+        { label: "นัดชมเดือนนี้", value: "34", color: "green" },
+        { label: "ปิดการขาย", value: "12", color: "purple" },
+      ],
+      tableTitle: "นัดชมโครงการล่าสุด",
+      columns: ["วันที่", "ชื่อ", "ยูนิตที่สนใจ", "สถานะ"],
+      rows: [
+        ["8 พ.ค.", "คุณสมชาย", "2 Bed ชั้น 18", "นัดชมแล้ว"],
+        ["8 พ.ค.", "คุณนภา", "Studio ชั้น 8", "รอติดต่อ"],
+        ["7 พ.ค.", "คุณวิทย์", "Penthouse ชั้น 30", "ทำสัญญาแล้ว"],
+        ["7 พ.ค.", "คุณแพร", "1 Bed ชั้น 12", "นัดชมแล้ว"],
+        ["6 พ.ค.", "คุณเบล", "2 Bed ชั้น 22", "รอติดต่อ"],
+      ],
+    },
+    portfolio: {
+      title: "ระบบจัดการ Portfolio",
+      stats: [
+        { label: "ผู้เข้าชมเดือนนี้", value: "2,156", color: "blue" },
+        { label: "คนที่ติดต่อเข้ามา", value: "14", color: "green" },
+        { label: "โปรเจกต์ทั้งหมด", value: "12", color: "purple" },
+      ],
+      tableTitle: "ข้อความที่ติดต่อเข้ามา",
+      columns: ["วันที่", "ชื่อ", "อีเมล", "เรื่อง"],
+      rows: [
+        ["7 พ.ค.", "John Smith", "john@agency.com", "Brand Identity Project"],
+        ["6 พ.ค.", "คุณนภา", "napa@startup.co", "ออกแบบ App UI"],
+        ["5 พ.ค.", "Mike Chen", "mike@corp.com", "Website Redesign"],
+        ["4 พ.ค.", "คุณสมชาย", "somchai@biz.th", "ถ่ายภาพสินค้า"],
+        ["3 พ.ค.", "Sarah Lee", "sarah@brand.io", "Social Media Campaign"],
+      ],
+    },
   };
 
-  const data = adminData[slug] || { orders: 42, revenue: "฿125,000", products: 20 };
+  const config = configs[slug] || configs.ecommerce;
 
   return (
     <div className="min-h-screen bg-slate-50">
@@ -109,45 +207,41 @@ function DemoAdmin({ slug }: { slug: string }) {
 
         {/* Main */}
         <main className="flex-1 p-6">
-          <h1 className="text-2xl font-bold text-slate-900">Dashboard</h1>
-          <p className="mt-1 text-sm text-slate-500">ภาพรวมร้านค้าของคุณ</p>
+          <h1 className="text-2xl font-bold text-slate-900">{config.title}</h1>
+          <p className="mt-1 text-sm text-slate-500">ภาพรวมระบบหลังบ้าน</p>
 
           {/* Stats */}
           <div className="mt-6 grid gap-4 sm:grid-cols-3">
-            <StatCard label="คำสั่งซื้อเดือนนี้" value={String(data.orders)} color="blue" />
-            <StatCard label="รายได้เดือนนี้" value={data.revenue} color="green" />
-            <StatCard label="สินค้าในระบบ" value={String(data.products)} color="purple" />
+            {config.stats.map((s) => (
+              <StatCard key={s.label} label={s.label} value={s.value} color={s.color} />
+            ))}
           </div>
 
-          {/* Recent orders */}
+          {/* Table */}
           <div className="mt-8 rounded-2xl border border-slate-200 bg-white p-5">
-            <h3 className="mb-4 text-sm font-semibold text-slate-900">คำสั่งซื้อล่าสุด</h3>
+            <h3 className="mb-4 text-sm font-semibold text-slate-900">{config.tableTitle}</h3>
             <table className="w-full text-sm">
               <thead className="text-left text-xs text-slate-500">
                 <tr>
-                  <th className="pb-2">เลขที่</th>
-                  <th className="pb-2">ลูกค้า</th>
-                  <th className="pb-2">สถานะ</th>
-                  <th className="pb-2 text-right">ยอด</th>
+                  {config.columns.map((col) => (
+                    <th key={col} className="pb-2">{col}</th>
+                  ))}
                 </tr>
               </thead>
               <tbody>
-                {[
-                  { id: "#1089", name: "คุณสมชาย", status: "จัดส่งแล้ว", amount: "฿2,490", color: "green" },
-                  { id: "#1088", name: "คุณนภา", status: "กำลังจัดส่ง", amount: "฿1,890", color: "blue" },
-                  { id: "#1087", name: "คุณวิทย์", status: "รอชำระเงิน", amount: "฿3,280", color: "amber" },
-                  { id: "#1086", name: "คุณแพร", status: "จัดส่งแล้ว", amount: "฿890", color: "green" },
-                  { id: "#1085", name: "คุณเบล", status: "จัดส่งแล้ว", amount: "฿4,590", color: "green" },
-                ].map((o) => (
-                  <tr key={o.id} className="border-t border-slate-100">
-                    <td className="py-3 font-mono text-xs">{o.id}</td>
-                    <td className="py-3">{o.name}</td>
-                    <td className="py-3">
-                      <span className={`rounded-full px-2 py-0.5 text-xs font-medium bg-${o.color}-100 text-${o.color}-700`}>
-                        {o.status}
-                      </span>
-                    </td>
-                    <td className="py-3 text-right font-medium">{o.amount}</td>
+                {config.rows.map((row, i) => (
+                  <tr key={i} className="border-t border-slate-100">
+                    {row.map((cell, j) => (
+                      <td key={j} className="py-3">
+                        {j === config.columns.length - 1 ? (
+                          <span className="rounded-full bg-slate-100 px-2 py-0.5 text-xs font-medium text-slate-700">
+                            {cell}
+                          </span>
+                        ) : (
+                          cell
+                        )}
+                      </td>
+                    ))}
                   </tr>
                 ))}
               </tbody>
@@ -156,7 +250,7 @@ function DemoAdmin({ slug }: { slug: string }) {
 
           {/* Chart placeholder */}
           <div className="mt-6 rounded-2xl border border-slate-200 bg-white p-5">
-            <h3 className="mb-4 text-sm font-semibold text-slate-900">ยอดขายรายสัปดาห์</h3>
+            <h3 className="mb-4 text-sm font-semibold text-slate-900">สถิติรายสัปดาห์</h3>
             <div className="flex h-40 items-end justify-between gap-2 px-4">
               {[40, 65, 45, 80, 55, 90, 70].map((h, i) => (
                 <div key={i} className="flex flex-1 flex-col items-center gap-1">
