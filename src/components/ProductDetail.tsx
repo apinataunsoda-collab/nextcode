@@ -131,6 +131,13 @@ export default function ProductDetail({ product }: { product: CatalogProduct }) 
                     {formatTHB(product.basePrice)}
                   </span>
                 </div>
+                <Link
+                  href={`/demo/${product.slug}`}
+                  target="_blank"
+                  className="mt-4 flex items-center justify-center gap-2 rounded-xl border border-brand-200 bg-brand-50 py-2.5 text-sm font-medium text-brand-700 transition hover:bg-brand-100"
+                >
+                  🎨 ดูตัวอย่างเว็บจริง (Prototype)
+                </Link>
               </div>
 
               <h3 className="mt-8 text-lg font-semibold text-slate-900">
@@ -201,13 +208,6 @@ export default function ProductDetail({ product }: { product: CatalogProduct }) 
                   className="mt-5 block rounded-full bg-white py-3 text-center text-sm font-semibold text-slate-900 transition hover:bg-brand-100"
                 >
                   สั่งซื้อ / ขอใบเสนอราคา
-                </Link>
-                <Link
-                  href={`/demo/${product.slug}`}
-                  target="_blank"
-                  className="mt-3 block rounded-full border border-white/30 py-3 text-center text-sm font-medium text-white/90 transition hover:bg-white/10"
-                >
-                  🎨 ดูตัวอย่างเว็บจริง (Prototype)
                 </Link>
               </div>
             </div>
