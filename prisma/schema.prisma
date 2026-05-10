@@ -211,3 +211,25 @@ model QuotationItem {
 
   @@index([quotationId])
 }
+
+
+/// บทความ/บล็อก (SEO Content)
+model BlogPost {
+  id            String   @id @default(cuid())
+  slug          String   @unique
+  title         String
+  excerpt       String   @default("") // คำอธิบายสั้น (ใช้เป็น meta description)
+  content       String   @default("") // เนื้อหา (Markdown หรือ HTML)
+  coverImage    String   @default("")
+  metaTitle     String   @default("") // ถ้าว่าง ใช้ title แทน
+  metaDesc      String   @default("") // ถ้าว่าง ใช้ excerpt แทน
+  keywords      String   @default("") // comma-separated
+  author        String   @default("")
+  status        String   @default("DRAFT") // DRAFT | PUBLISHED
+  publishedAt   DateTime?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  @@index([status])
+  @@index([publishedAt])
+}

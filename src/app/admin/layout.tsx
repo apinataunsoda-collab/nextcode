@@ -10,6 +10,7 @@ const navItems = [
   { href: "/admin/leads", label: "Leads ลูกค้า" },
   { href: "/admin/quotations", label: "ใบเสนอราคา" },
   { href: "/admin/insights", label: "Insights" },
+  { href: "/admin/blog", label: "บทความ / บล็อก" },
   { href: "/admin/products", label: "สินค้า (เว็บไซต์)" },
   { href: "/admin/categories", label: "หมวดหมู่" },
   { href: "/admin/addons", label: "บริการเสริม" },
