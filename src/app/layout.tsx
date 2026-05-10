@@ -6,6 +6,7 @@ import Analytics from "@/components/analytics/Analytics";
 export async function generateMetadata(): Promise<Metadata> {
   const s = await getSiteSettings();
   const title = `${s.name} | ${s.tagline}`;
+  const ogImage = `${s.url}/api/og?title=${encodeURIComponent(s.name)}&subtitle=${encodeURIComponent(s.tagline)}`;
 
   return {
     metadataBase: new URL(s.url),
@@ -26,13 +27,13 @@ export async function generateMetadata(): Promise<Metadata> {
       description: s.description,
       siteName: s.name,
       locale: "th_TH",
-      images: [{ url: s.logoUrl || "/og-default.png", alt: s.name }],
+      images: [{ url: ogImage, width: 1200, height: 630, alt: s.name }],
     },
     twitter: {
       card: "summary_large_image",
       title,
       description: s.description,
-      images: [s.logoUrl || "/og-default.png"],
+      images: [ogImage],
     },
     robots: {
       index: true,

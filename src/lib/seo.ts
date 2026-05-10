@@ -20,7 +20,7 @@ export async function productMetadata(p: CatalogProduct): Promise<Metadata> {
     (p.features.length ? ` — ${p.features.slice(0, 3).join(", ")}` : "") +
     ` · รับทำเว็บไซต์ ${priceLabel} รองรับ SEO ด้วย AI`;
   const description = truncate(descRaw, 160);
-  const image = p.image || s.logoUrl || "/og-default.png";
+  const image = p.image || `${s.url}/api/og?title=${encodeURIComponent(p.name)}&subtitle=${encodeURIComponent(p.shortDescription)}&price=${encodeURIComponent(formatTHB(p.basePrice))}`;
   const keywords = [
     "รับทำเว็บไซต์",
     p.name,
